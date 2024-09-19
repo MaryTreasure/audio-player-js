@@ -22,12 +22,43 @@ function loadSong (song) {
 loadSong(songs[songIndex]);
 
 function playSong () {
-    audio.play()
+    player.classList.add('play')
+    audio.play();
+    imgSrc.src = 'assets/svg/pause.png'
+
 }
 function pauseSong () {
-    audio.pause()
+    player.classList.remove('play')
+    audio.pause();
+    imgSrc.src = 'assets/svg/play.png'
 } 
 
 playBtn.addEventListener('click', () => {
-    playSong()
+    const isPlaying = player.classList.contains('play');
+    isPlaying? pauseSong() : playSong();
 })
+
+function nextSong() {
+    songIndex++
+
+    if (songIndex > songs.length - 1) {
+        songIndex = 0
+    }
+
+    loadSong(songs[songIndex]);
+    playSong()
+}
+
+function prevSong() {
+    songIndex--;
+
+    if (songIndex < 0) {
+        songIndex = songs.length - 1
+    }
+
+    loadSong(songs[songIndex]);
+    playSong()
+}
+
+nextBtn.addEventListener('click', nextSong)
+prevBtn.addEventListener('click', prevSong)
